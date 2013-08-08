@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>Modal test</title>
+		<link rel="stylesheet" href="css/modal.css">
+		<script src="js/libs/jquery.min.js"></script>
+        <script src="js/modal.jquery.js"></script>
+	</head>
+	<body>
+		<div><a href="#modal" id="modal-img" href="#">Modal1</a></div>
+		<div><a href="#modal2" id="modal-content" href="#">Modal2</a></div>
+		<div id="modal" class="modal">
+			<h2>Modal1</h2>
+			<button class="modal-ok" type="button">OK</button>
+			<button class="modal-cancel" type="button">Cancel</button>
+		</div>
+		<div id="modal2" class="modal">
+			<h2>Modal2</h2>
+			<div>
+				<button class="modal-ok" type="button">OK</button>
+				<button class="modal-cancel" type="button">Cancel</button>
+			</div>
+		</div>
+		<script>
+			$('#modal-img').modal({
+				fixed: true,
+				height: 100,
+				handler: {
+					ok: function() {
+						alert('ok2');
+					},
+					cancel: function() {
+						alert('cancel2');
+					}
+				}
+			})
+			$('#modal-content').modal({
+				handler: {
+					ok: function() {
+						alert('ok');
+					},
+					cancel: function() {
+						alert('cancel');
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

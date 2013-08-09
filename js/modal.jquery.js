@@ -37,40 +37,45 @@ var Modal = (function() {
 				conf = self.conf;
 			if(self.$el.hasClass('show')) return;
 
-			var win_height = $(window).height(),
-				win_width = $(window).width();
+			if(self.$el.data('target') === self.target) {
+    			self.$el.addClass('show').show();
+			} else {
+				var win_height = $(window).height(),
+					win_width = $(window).width();
 
-			var m_width = conf.width,
-				m_height = conf.height,
-				top = (win_height - m_width) / 2,
-				left = (win_width - m_width) / 2;
+				var m_width = conf.width,
+					m_height = conf.height,
+					top = (win_height - m_width) / 2,
+					left = (win_width - m_width) / 2;
 
-			if(top < 0) top = 10;
-			if(left < 0) left = 10;
+				if(top < 0) top = 10;
+				if(left < 0) left = 10;
 
-			var css = {
-				left: left,
-				top: top,
-				width: conf.width,
-				height: conf.height
-			}
-			if(conf.fixed) css = $.extend(css, {position: 'fixed'});
+				var css = {
+					left: left,
+					top: top,
+					width: conf.width,
+					height: conf.height
+				}
+				if(conf.fixed) css = $.extend(css, {position: 'fixed'});
 
-			self.$el
-				.css(css)
-				.addClass('show')
-				.show()
-				.find('.modal-lite-body')
-				.html($(self.target).html());
+				self.$el
+					.data('target', self.target)
+					.css(css)
+					.addClass('show')
+					.show()
+					.find('.modal-lite-body')
+					.html($(self.target).html());
 
-			if(conf.handler !== undefined) {
-				self.$el.find('.modal-ok').off('click').on('click', function() {
-					conf.handler.ok();
-				});
-				self.$el.find('.modal-cancel').off('click').on('click', function() {
-					conf.handler.cancel();
-					self.$el.hide().removeClass('show');
-				});
+				if(conf.handler !== undefined) {
+					self.$el.find('.modal-ok').off('click').on('click', function() {
+						conf.handler.ok();
+					});
+					self.$el.find('.modal-cancel').off('click').on('click', function() {
+						conf.handler.cancel();
+						self.$el.hide().removeClass('show');
+					});
+				}
 			}
 		}
 	}

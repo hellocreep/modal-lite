@@ -16,11 +16,10 @@ var Modal = (function() {
 				conf = self.conf;
 
 			var modal_wrap = $('<div id="modal_lite"></div>'),
-				modal_body = $('<div class="modal-lite-body"></div>'),
-				modal_header = modal_header = $('<div class="modal-lite-header"><a class="modal-lite-close" href="javascript:;">X</a></div>');
+				modal_body = '<div class="modal-lite-body"></div>',
+				modal_header = '<div class="modal-lite-header"><a class="modal-lite-close" href="javascript:;">X</a></div>';
 
 			self.modal_wrap = modal_wrap;
-			self.modal_body = modal_body;
 
 			if(self.$el.length === 0) {
 				modal_wrap.append(modal_header).append(modal_body);
@@ -38,7 +37,7 @@ var Modal = (function() {
 			if(self.$el.hasClass('show')) return;
 
 			if(self.$el.data('target') === self.target) {
-    			self.$el.addClass('show').show();
+				self.$el.addClass('show').show();
 			} else {
 				var win_height = $(window).height(),
 					win_width = $(window).width();

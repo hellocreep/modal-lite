@@ -1,19 +1,20 @@
-var Modal = (function() {
-	function Modal(conf, target) {
-		this.defaults = {
-			width: 400,
-			height: 500,
-			fixed: false
-		}
+(function(factory) {
+	if(typeof define === 'function') {
+		define(['jquery'], factory);
+	} else {
+		factory(jQuery);
+	}
+})(function($) {
+	var Modal = function (target, conf) {
 		this.init(conf);
 		this.target = $(target).attr('href');	
 	}
+
 	Modal.prototype = {
 		init: function(conf) {
 			var self = this;
 				self.$el = $('#modal_lite'),
-				self.conf = $.extend({}, self.defaults, conf),
-				conf = self.conf;
+				self.conf = conf;
 
 			var modal_wrap = $('<div id="modal_lite"></div>'),
 				modal_body = '<div class="modal-lite-body"></div>',
@@ -78,16 +79,26 @@ var Modal = (function() {
 			}
 		}
 	}
-	return Modal;
-})();
 
-$.fn.modal = function(conf) {
-	this.each(function() {
-		var modal = new Modal(conf, this);
-		$(this).on('click', function(e) {
-			e.preventDefault();
-			modal.open();
+	$.fn.modal = function(conf) {
+		return this.each(function() {
+			var $this = $(this),
+				data = $this.data('modal'),
+				opts = $.extend({}, $.fn.modal.defaults, $this.data(), typeof conf == 'object' && conf);
+				modal = new Modal(this, opts);
+
+			if(!data) $this.data('modal', modal);
+
+			$this.on('click', function(e) {
+				e.preventDefault();
+				modal.open();
+			});
 		});
-	});
-	return this;
-}
+	}
+
+	$.fn.modal.defaults = {
+		width: 400,
+		height: 500,
+		fixed: false
+	}
+});
